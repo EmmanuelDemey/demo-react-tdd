@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import List from "./list/list";
 
 function App() {
+  const [todos, setTodos] = useState([{ label: 1, done: false }]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <List
+      todos={todos}
+      onAdd={(todo) => {
+        setTodos([...todos, todo]);
+      }}
+      onCheck={(todo) => {
+        setTodos(
+          todos.map((t) => {
+            if (todo.label === t.label) {
+              return {
+                ...todo,
+                done: !todo.done,
+              };
+            }
+            return t;
+          })
+        );
+      }}
+    />
   );
 }
 
